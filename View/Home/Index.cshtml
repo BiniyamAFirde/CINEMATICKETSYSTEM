@@ -1,0 +1,109 @@
+@{
+    ViewData["Title"] = "Home";
+    var userName = Context.Session.GetString("UserName");
+    var isLoggedIn = Context.Session.GetInt32("UserId") != null;
+    var isAdmin = Context.Session.GetInt32("IsAdmin") == 1;
+}
+
+<div class="container mt-5">
+    <div class="jumbotron bg-light p-5 rounded-lg">
+        <h1 class="display-4">🎭 Welcome to Cinema Ticket System</h1>
+        <p class="lead">Book your favorite movies online with ease!</p>
+        @if (isLoggedIn)
+        {
+            <p class="text-success">
+                <strong>✓ Logged in as: @userName</strong>
+                @if (isAdmin)
+                {
+                    <span class="badge bg-danger ms-2">👑 ADMIN</span>
+                }
+            </p>
+        }
+        else
+        {
+            <p class="text-warning"><strong>⚠️ Not logged in</strong></p>
+        }
+        <hr class="my-4">
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-body text-center">
+                    <h3>🎬 Browse Screenings</h3>
+                    <p class="card-text">Explore available movie screenings and check seat availability in real-time.</p>
+                    <a href="@Url.Action("Index", "Screenings")" class="btn btn-primary">View Screenings</a>
+                </div>
+            </div>
+        </div>
+
+        @if (isLoggedIn)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow">
+                    <div class="card-body text-center">
+                        <h3>📅 My Reservations</h3>
+                        <p class="card-text">Manage and view all your cinema ticket reservations.</p>
+                        <a href="@Url.Action("Index", "Reservations")" class="btn btn-info">View Reservations</a>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-body text-center">
+                    <h3>👤 Account</h3>
+                    @if (isLoggedIn)
+                    {
+                        <p class="card-text">Manage your profile and account information.</p>
+                        <a href="@Url.Action("Logout", "Users")" class="btn btn-danger">Logout</a>
+                    }
+                    else
+                    {
+                        <p class="card-text">Login to your account or register for a new one.</p>
+                        <a href="@Url.Action("Login", "Users")" class="btn btn-success me-2">Login</a>
+                        <a href="@Url.Action("Register", "Users")" class="btn btn-primary">Register</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (isAdmin)
+    {
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="alert alert-danger">
+                    <h5>👑 Admin Panel</h5>
+                    <p>You have admin privileges. You can:</p>
+                    <ul class="mb-0">
+                        <li><strong>Create Screenings:</strong> Add new movies to the system</li>
+                        <li><strong>Edit Screenings:</strong> Modify film details</li>
+                        <li><strong>Delete Screenings:</strong> Remove screenings (all reservations will be deleted)</li>
+                        <li><strong>Manage Users:</strong> View, edit, and delete user accounts</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <h5 class="card-title">📖 How to Book a Ticket</h5>
+                    <ol class="card-text">
+                        <li><strong>Register:</strong> Create a new account with your name and phone number</li>
+                        <li><strong>Login:</strong> Enter your name, surname, and password</li>
+                        <li><strong>Browse Screenings:</strong> Go to "Screenings" and see available movies</li>
+                        <li><strong>View Seats:</strong> Click "View Seats" to see the cinema layout</li>
+                        <li><strong>Reserve:</strong> Click on green ✓ buttons to reserve your seats</li>
+                        <li><strong>Cancel:</strong> Click on your reserved seat again to cancel</li>
+                        <li><strong>View Reservations:</strong> Go to "My Reservations" to see all your bookings</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
