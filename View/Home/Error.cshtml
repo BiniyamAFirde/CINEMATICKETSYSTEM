@@ -1,0 +1,31 @@
+@model CinemaTicketSystem.Models.ErrorViewModel
+
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h2>Error</h2>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">An error occurred while processing your request.</p>
+
+                    @if (Model.ShowRequestId)
+                    {
+                        <p>
+                            <strong>Request ID:</strong> <code>@Model.RequestId</code>
+                        </p>
+                    }
+
+                    <p class="text-muted">Please try again later or contact support if the problem persists.</p>
+
+                    <a href="@Url.Action("Index")" class="btn btn-primary">Go Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
