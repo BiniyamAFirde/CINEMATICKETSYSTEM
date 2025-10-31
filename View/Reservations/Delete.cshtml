@@ -1,0 +1,46 @@
+@model CinemaTicketSystem.Models.Reservation
+
+@{
+    ViewData["Title"] = "Cancel Reservation";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h2>❌ Cancel Reservation</h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-warning" role="alert">
+                        <strong>⚠️ Warning!</strong> Are you sure you want to cancel this reservation?
+                    </div>
+
+                    <div class="mb-4 p-3 bg-light rounded">
+                        <h5>📋 Reservation Details</h5>
+                        <hr>
+                        <p class="mb-2"><strong>🎬 Film Title:</strong> @Model.Screening.FilmTitle</p>
+                        <p class="mb-2"><strong>🎭 Cinema:</strong> @Model.Screening.Cinema.Name</p>
+                        <p class="mb-2"><strong>📅 Screening Date & Time:</strong> @Model.Screening.ScreeningDateTime.ToString("dd/MM/yyyy HH:mm")</p>
+                        <p class="mb-2"><strong>🪑 Your Seat:</strong> <span class="badge bg-info">Row @Model.Row, Seat @Model.SeatNumber</span></p>
+                        <p class="mb-2"><strong>👤 Your Name:</strong> @Model.User.Name @Model.User.Surname</p>
+                        <p class="mb-0"><strong>⏰ Reserved On:</strong> @Model.ReservationTime.ToString("dd/MM/yyyy HH:mm")</p>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <small>Once cancelled, this seat will become available for other users to book.</small>
+                    </div>
+
+                    <form asp-action="Delete" method="post">
+                        <input type="hidden" asp-for="ReservationId" />
+                        @Html.AntiForgeryToken()
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-danger btn-lg">🗑️ Yes, Cancel This Reservation</button>
+                            <a href="@Url.Action("Index")" class="btn btn-secondary btn-lg">← Go Back</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
